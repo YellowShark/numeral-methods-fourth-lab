@@ -1,6 +1,4 @@
 import java.io.File
-import java.io.FileWriter
-import java.io.PrintWriter
 import java.util.*
 
 const val INPUT_FILE = "in.txt"

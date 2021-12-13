@@ -1,6 +1,4 @@
 import java.io.File
-import java.io.FileWriter
-import java.io.PrintWriter
 import kotlin.math.abs
 import kotlin.math.ln
 import kotlin.math.pow
@@ -17,9 +15,13 @@ class TrapeziumMethod {
         do {
             newN *= 2
             val currIntegral = calc(a, b, newN, hMin)
-            if (currIntegral >= prevIntegral)
-                throw ArithmeticException("IER = 1. Решение не получено, т.к. погрешность перестала уменьшаться.")
             e = abs((prevIntegral - currIntegral) / ( (0.5f).pow(S) - 1) )
+            if (e == 0f && n != newN / 2)
+                throw ArithmeticException("IER = 1. Решение не получено, т.к. погрешность перестала уменьшаться.")
+            if (e < eps && n == newN / 2) {
+                newN = n
+                break
+            }
             prevIntegral = currIntegral
         } while (e > eps)
 
@@ -47,5 +49,5 @@ class TrapeziumMethod {
         return h * f
     }
 
-    private fun f(x: Float) = 1 / ln(x)
+    private fun f(x: Float) = x.pow(2)
 }
